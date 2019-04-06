@@ -1,0 +1,225 @@
+
+	1. 所有的django命令
+		1. 安装
+			pip install django==1.11.14
+			pip install -i 源 django==1.11.14
+		2. 创建项目
+			django-admin startproject 项目名称
+		3. 启动项目
+			python manage.py runserver      127.0.0.1:8000
+			python manage.py runserver 80   127.0.0.1:80
+			python manage.py runserver 0.0.0.0:80   0.0.0.0:80
+		4. 创建APP
+			python manage.py startapp app01
+		5. 数据库迁移
+			Python manage.py makemigrations    # 将models的变化记录下来 
+			python manage.py migrate 		   # 将变更更新到数据库当中
+		
+	2. 配置
+		1. 静态文件
+			STIATIC_URL = '/static/'	 # 别名
+			STIATICFILES_DIRS = [
+				os.path.join(BASE_DIR,'static'),
+			]
+		2. 注释csrf中间件   
+		3. TEMPLATES  DIRS  os.path.join(BASE_DIR,'templates')
+		4. DATABASES	
+		5. INSTALLED_APPS =[
+			'app01'   或者 'app01.apps.App01Config' 
+ 		]
+	3. ORM类和数据库对应关系
+			类   ——》 数据表
+			对象 ——》 数据行
+			属性 ——》 字段
+	4. django使用mysql数据的流程
+		1. 创建mysql的数据库
+		2. 配置
+			ENGINE: mysql
+			NAME: 数据库名字
+			HOST: ip地址
+			PORT：3306
+			USER: 用户名
+			PASSWORD: 密码
+		3. 告诉django使用pymysql模块连接你的mysql数据库
+			在与项目同名文件夹下的__init__.py文件写：
+				import pymysql
+				pymysql.install_as_MySQLdb()
+		4. 在app01下的models.py中写类（必须继承models.Model）:
+			class Publisher(models.Model):
+				id = models.AutoField(primary_key=True)
+				name = models.CharField(max_length=32, null=False, unique=True)
+				addr = models.CharField(max_length=128, null=False)
+
+				def __str__(self):
+					return "< Publisher object: {}>".format(self.name)
+
+
+			class Book(models.Model):
+				id = models.AutoField(primary_key=True)
+				title = models.CharField(max_length=32, null=False, unique=True)
+				publisher = models.ForeignKey(to='Publisher', on_delete=models.CASCADE)
+
+				def __str__(self):
+					return "< Publisher object: {}>".format(self.title)
+
+
+			class Author(models.Model):
+				id = models.AutoField(primary_key=True)
+				name = models.CharField(max_length=32, null=False, unique=True)
+				books = models.ManyToManyField(to='Book')	
+				
+		5. 执行数据库迁移的命令
+			Python manage.py makemigrations
+			python manage.py migrate
+	5.ORM操作
+		1. 查
+			models.Publisher.objects.all()		# 查询所有的出版社对象的集合
+			models.Publisher.objects.get(id=1,nam='sss)   # 查询指定的满足条件的对象 	——》一个对象 
+			models.Publisher.objects.filter(id=1,name='sss')  # 查询满足条件的所有对象      ——》 对象列表
+			models.Publisher.objects.all().order_by('id')    # 排序
+			
+			属性：
+				无外键、多对多：
+					pub_obj.id 
+					pub_obj.name
+				外键：
+					book_obj.id
+					book_obj.name
+					book_obj.publisher   ——》book所关联的出版社对象
+					book_obj.publisher.id 
+					book_obj.publisher_id
+				多对多：
+					author_obj.id
+					author_obj.name
+					author_obj.books		——》django封装的管理对象
+					author_obj.books.all()	——》 拿到作者管理的所有书籍的对象列表
+		2. 增
+			models.Publisher.objects.create(name='新的出版社')
+			外键：
+				models.Bookj.objects.create(name='新的书名',publisher_id=1)
+				models.Bookj.objects.create(name='新的书名',publisher=pub_obj)
+			多对多：
+				autho_obj = models.Author.objects.create(name='新的作者')
+				autho_obj.books.set([1,2])
+				
+		3. 删
+			models.Publisher.objects.get(id=1).delele()  	
+			models.Publisher.objects.filter(name='xxx').delele()
+		4. 改
+			pub_obj.name = '新的名字'
+			pub_obj.save() 
+			
+			外键：
+				book_obj.name = '新的书名'
+				book_obj.publisher = pub_obj
+				# book_obj.publisher_id = pub_obj.id 
+				book_obj.save()
+				
+			多对多：
+				author_obj.name='新的作者名'
+				author_obj.save()
+				author_obj.books.set([1,2,3])
+				
+		
+		
+	6. request	——》 封装了请求所有的内容
+		request.method   ——》请求方式 GET POST 
+		request.GET 	 ——》 URL上面传参数 127.0.0.1:8000/del_book/?id=1&name='xx'
+						字典形式 	request.GET['id']	request.GET.get('id')
+		request.POST     ——》POST请求提交的数据 字典
+					request.POST['id']	request.POST.get('id')	
+					
+	7. 函数的返回值 		——》必须是HttpResponse对象
+		HttpResponse('字符串')		——》页面显示字符串的内容
+		render(request,'HTML文件名',{k1:v1,})	——》将字典的内容交给模板渲染成HTML 返回给浏览器
+		redirect('/index/')		跳转 重定向 ——》返回一个响应头 Location：/index/
+	
+	
+		
+
+	8. django的模板：
+		
+			{{ 变量 }} 
+			for 循环
+			{% for name in name_list %}
+				{{ name }}
+				{{ forloop.counter }}
+				{{ forloop.last }}
+			{% endfor %}
+			
+			if判断
+			{% if 10>5 %}
+				操作
+			{% endif %}
+			
+			{% if 10>5 %}
+				操作
+			{% else %}
+				条件不成立的操作
+			{% endif %}
+			
+			
+			{% if 10>5 %}
+				操作
+			{% elif 10>5 %}
+				elif成立时的操作
+			{% else %}
+				条件不成立的操作
+			{% endif %}
+
+==============================================================
+		1. 变量
+			{{ 变量名 }} 
+			
+		2. .用法
+			{{ name_list.0 }}   
+			{{ name_dict.key }}   
+			{{ p1.name }}   
+			{{ p1.dream }} 
+			{{ name_dict.items }} 
+			{{ name_dict.keys }} 
+		3. filters 过滤器
+			1. 语法
+				{{ 变量|filter:参数 }}
+			2. 内置的filter 
+				default:'noting'   
+				filesizeformat    显示文件大小 111111  ——》 kb mb pb 
+				add:'1' 		  数字加法  字符串拼接 列表的拼接
+				lower      小写
+				upper	   大写
+				title	   首字母大写
+				rjust:20	右对齐
+				ljust:20    左对齐
+				center:20	居中
+				length      返回字符串或者列表的长度
+				slice:"::"	切片
+				first 		取第一个
+				last		取最后一个
+				join:'//'	将列表拼接成字符串
+				truncatechars:18   将超过指定长度的内容替换成...
+				date:'Y-m-d H:i:s'	2018-7-31 8:52:59
+				safe        对你的HTML文本不进行转义
+			3. 自定义filter
+				1. 在app01下创建一个叫templatetags的Python包
+				2. 在templatetags的文件夹下创建py文件  myfilters
+				3. 在py文件中写代码
+					from django import template
+					register = template.Library()
+					
+					@register.filter
+					def add_sb(value,arg='aaa'):
+						return "{}_sb_{}".formart(value,arg)
+						
+					@register.filter(name='sb')
+					def add_sb(value,arg='aaa'):
+						return "{}_sb_{}".formart(value,arg)
+				
+				4. 使用自定义filter
+					{% load myfilters %}
+					{{ name|add_sb:'xxx'}}
+					{{ name|sb:'xxx'}}
+		
+		
+		
+		
+		
