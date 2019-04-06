@@ -1,0 +1,66 @@
+		1. 什么是中间件？
+			我在全局对Django的请求和响应做自定义操作！
+		2. 中间件能干什么？
+			登录验证
+			访问限制
+			...
+			每个视图函数都要做的事儿就可以提到中间件来做
+		3. 自定义中间件
+			Django中中间件有5个方法
+			五个方法主要学习的是：
+				1. 执行顺序
+				2. 参数
+				3. 返回值
+				
+			process_request(self,request)
+				1. 执行时间和顺序
+					在视图函数之前执行
+					按照中间件的注册顺序执行
+				2. 参数
+					request和视图函数中的request是同一个对象，就是请求本身
+				3. 返回值
+					1. 返回None,请求继续往后执行
+					2. 返回响应对象，请求直接就结束了。
+			process_response(self, request, response)
+				1. 执行时间和执行顺序
+					返回响应之后执行
+					按照注册的倒序执行
+				2. 参数
+					request    --> 请求
+					response   --> 响应对象
+				3. 返回值
+					必须返回response对象
+			
+			process_view(self, request, view_func, view_args, view_kwargs)
+				1. 执行时间和执行顺序
+					在中间件的process_request方法之后在视图函数之前执行
+					具体是在urls.py中得到将要执行的视图函数之后执行
+					
+					按照注册的顺序执行
+					
+				2. 参数
+					request       --> 请求
+					view_func     --> 将要执行的视图函数对象
+					view_args     --> 视图函数的位置参数
+					view_kwargs   --> 视图函数的关键字参数
+					
+				3. 返回值
+					返回None      --> 继续往后执行
+					返回响应对象  --> 不走视图函数，直接走中间件的process_response
+					
+					
+			-------    ↓  不常用 --------------------------
+			
+			process_template_response(self,request,response)
+				1. 视图函数返回的响应对象由render方法的时候才执行
+				
+			process_exception(self, request, exception)
+				1. 视图函数中抛出异常的时候才执行
+				
+					按照注册的倒序执行，只要有一个中间件中的process_exception 返回响应对象就不忘后走了
+					直接执行 process_response方法
+				2. 参数
+					exception    --> 异常
+				3. 返回值
+					返回None     --> 继续往后执行
+					返回响应对象

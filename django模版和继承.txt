@@ -1,0 +1,28 @@
+	1. 母板和继承
+		1.为什么要用母板和继承：
+			很多页面有重复或相似的代码，减少代码的重复和修改方便才用母板和继承
+		2.具体步骤：
+			1. 创建一个母板，'base.html' 将多个页面的重复代码提取出来
+			2. 在母板中定义多个block，来区分不同页面的不同内容
+			3. 在子页面中继承母板  {% extends 'base.html' %}
+			4. 在block中写自己页面独特的内容
+			
+		3. 注意事项
+			1. {% extends 'base.html' %} 写在第一个行
+			2. {% extends 'base.html' %}  base.html加上引号  不然当做是变量
+			3. 通常定义多个block，还有一个page-css 和 page-js 
+	2 组件
+		将一小部分的HTML代码写在一个模板中。———》 组件
+		在其他的页面中 {% include 'nav.html' %}
+		
+	3. 静态文件的内容
+		{% load static %}
+		"{% static 'css/mycss.css' %}"    ——》 /static/css/mycss.css
+		
+		{% get_static_prefix %}  —— 》  /static/
+		
+		"{% get_static_prefix %}css/mycss.css"
+			
+			
+	4. 自定义simple_tag 和 inclusion_tag 
+				

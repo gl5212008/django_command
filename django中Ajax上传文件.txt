@@ -1,0 +1,17 @@
+				 ajax上传文件
+					
+					var obj = new FormData();
+					obj.append("file", document.getElementById('id值').files[0])
+					obj.append("name", "alex")
+					
+					$.ajax({
+					  url: '',
+					  type: 'post',
+					  data: obj,
+					  processData: false,   // 不让jQuery处理我的数据
+					  contentType: false,   // 不让jQuery处理我请求内容的类型
+					  success:function(res){
+						// res就是后端给我返回的响应内容
+					    console.log(res)
+					  }
+					})

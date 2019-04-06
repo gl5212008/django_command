@@ -1,0 +1,49 @@
+﻿
+	
+	1. 	auth认证
+		默认Django内置的认证系统, 默认在数据库中使用auth_user
+		from django.contrib import auth
+		1. 创建一个超级用户
+			python manage.py createsuperuser
+		2. 验证用户名和密码是否正确
+			user = auth.authenticate(request, username, password)
+		3. 登录
+			auth.login(request, user)   --> user是上一步的得到的user对象
+		4. 注销
+			auth.logout(request)        --> 将当前请求的session数据删除
+		
+		5. 登录认证的装饰器
+			auth.decorators.login_required
+			默认跳转的登录url: /accounts/login/
+			在settings.py中 配置 LOGIN_URL = "你的登录url"
+		
+		6. is_authenticated()
+			判断当前request.user是否经过认证,经过认证就返回True,否则是False
+			
+		7. AuthenticationMiddleware中间件究竟做了什么？
+			request.user = user, 匿名用户对象
+		
+		8. create_user()
+		9. create_superuser()
+		10. check_password()
+		11. set_password()
+	
+	2. 扩展默认的auth_user表：
+		from django.contrib.auth.models import AbstractUser
+		class UserInfo(AbstractUser):
+			# 扩展auth模块默认的数据表
+			phone = models.CharField(max_length=11)
+		注意事项：
+			1. 告诉Django使用我的UserInfo表来做用户的管理
+				在settings.py中配置：
+				AUTH_USER_MODEL = "app名.UserInfo"
+	
+
+	
+		
+		
+		
+		
+			
+		
+			

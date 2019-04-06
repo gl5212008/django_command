@@ -1,0 +1,35 @@
+	1. form组件初识	
+		1. 由注册的例子引申出来：
+			1. 写html代码
+			2. 对用户填写的数据做校验   --> 前后端都需要做校验，后端校验是必须的！
+			3. 对用户展示错误提示信息
+		2. form组件使用
+			1. 自定义一个类，类一定要继承forms.Form
+			2. 前端：
+				1. form_obj.as_p              --> 简单演示
+				2. form_obj.name              --> input标签
+				   form_obj.name.label        --> label名称
+				   form_obj.name.id_for_label --> label标签for属性使用的id
+				   form_obj.errors            --> 用ul标签把所有的错误展示出来
+				   form_obj.name.errors.0     --> 取具体某个字段的第一个错误提示信息
+			3. 后端：
+				1. 实例化
+				   form_obj = RegForm(request.POST)
+				2. 数据有效性校验
+				   form_obj.is_valid()
+					- true 表示数据没有问题
+					- form_obj.cleaned_data  --> 保存经过校验的数据的大字典
+					
+
+		3. 各种字段和插件
+			...
+		
+		
+		4. 校验
+			1. 内置的校验规则
+			2. 自定义方法
+			3. 钩子函数
+				1. 局部钩子
+					def clean_字段名():
+				2. 全局钩子
+					def clean():
