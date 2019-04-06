@@ -1,50 +1,50 @@
 
-	1. ËùÓĞµÄdjangoÃüÁî
-		1. °²×°
+	1. æ‰€æœ‰çš„djangoå‘½ä»¤
+		1. å®‰è£…
 			pip install django==1.11.14
-			pip install -i Ô´ django==1.11.14
-		2. ´´½¨ÏîÄ¿
-			django-admin startproject ÏîÄ¿Ãû³Æ
-		3. Æô¶¯ÏîÄ¿
+			pip install -i æº django==1.11.14
+		2. åˆ›å»ºé¡¹ç›®
+			django-admin startproject é¡¹ç›®åç§°
+		3. å¯åŠ¨é¡¹ç›®
 			python manage.py runserver      127.0.0.1:8000
 			python manage.py runserver 80   127.0.0.1:80
 			python manage.py runserver 0.0.0.0:80   0.0.0.0:80
-		4. ´´½¨APP
+		4. åˆ›å»ºAPP
 			python manage.py startapp app01
-		5. Êı¾İ¿âÇ¨ÒÆ
-			Python manage.py makemigrations    # ½«modelsµÄ±ä»¯¼ÇÂ¼ÏÂÀ´ 
-			python manage.py migrate 		   # ½«±ä¸ü¸üĞÂµ½Êı¾İ¿âµ±ÖĞ
+		5. æ•°æ®åº“è¿ç§»
+			Python manage.py makemigrations    # å°†modelsçš„å˜åŒ–è®°å½•ä¸‹æ¥ 
+			python manage.py migrate 		   # å°†å˜æ›´æ›´æ–°åˆ°æ•°æ®åº“å½“ä¸­
 		
-	2. ÅäÖÃ
-		1. ¾²Ì¬ÎÄ¼ş
-			STIATIC_URL = '/static/'	 # ±ğÃû
+	2. é…ç½®
+		1. é™æ€æ–‡ä»¶
+			STIATIC_URL = '/static/'	 # åˆ«å
 			STIATICFILES_DIRS = [
 				os.path.join(BASE_DIR,'static'),
 			]
-		2. ×¢ÊÍcsrfÖĞ¼ä¼ş   
+		2. æ³¨é‡Šcsrfä¸­é—´ä»¶   
 		3. TEMPLATES  DIRS  os.path.join(BASE_DIR,'templates')
 		4. DATABASES	
 		5. INSTALLED_APPS =[
-			'app01'   »òÕß 'app01.apps.App01Config' 
+			'app01'   æˆ–è€… 'app01.apps.App01Config' 
  		]
-	3. ORMÀàºÍÊı¾İ¿â¶ÔÓ¦¹ØÏµ
-			Àà   ¡ª¡ª¡· Êı¾İ±í
-			¶ÔÏó ¡ª¡ª¡· Êı¾İĞĞ
-			ÊôĞÔ ¡ª¡ª¡· ×Ö¶Î
-	4. djangoÊ¹ÓÃmysqlÊı¾İµÄÁ÷³Ì
-		1. ´´½¨mysqlµÄÊı¾İ¿â
-		2. ÅäÖÃ
+	3. ORMç±»å’Œæ•°æ®åº“å¯¹åº”å…³ç³»
+			ç±»   â€”â€”ã€‹ æ•°æ®è¡¨
+			å¯¹è±¡ â€”â€”ã€‹ æ•°æ®è¡Œ
+			å±æ€§ â€”â€”ã€‹ å­—æ®µ
+	4. djangoä½¿ç”¨mysqlæ•°æ®çš„æµç¨‹
+		1. åˆ›å»ºmysqlçš„æ•°æ®åº“
+		2. é…ç½®
 			ENGINE: mysql
-			NAME: Êı¾İ¿âÃû×Ö
-			HOST: ipµØÖ·
-			PORT£º3306
-			USER: ÓÃ»§Ãû
-			PASSWORD: ÃÜÂë
-		3. ¸æËßdjangoÊ¹ÓÃpymysqlÄ£¿éÁ¬½ÓÄãµÄmysqlÊı¾İ¿â
-			ÔÚÓëÏîÄ¿Í¬ÃûÎÄ¼ş¼ĞÏÂµÄ__init__.pyÎÄ¼şĞ´£º
+			NAME: æ•°æ®åº“åå­—
+			HOST: ipåœ°å€
+			PORTï¼š3306
+			USER: ç”¨æˆ·å
+			PASSWORD: å¯†ç 
+		3. å‘Šè¯‰djangoä½¿ç”¨pymysqlæ¨¡å—è¿æ¥ä½ çš„mysqlæ•°æ®åº“
+			åœ¨ä¸é¡¹ç›®åŒåæ–‡ä»¶å¤¹ä¸‹çš„__init__.pyæ–‡ä»¶å†™ï¼š
 				import pymysql
 				pymysql.install_as_MySQLdb()
-		4. ÔÚapp01ÏÂµÄmodels.pyÖĞĞ´Àà£¨±ØĞë¼Ì³Ğmodels.Model£©:
+		4. åœ¨app01ä¸‹çš„models.pyä¸­å†™ç±»ï¼ˆå¿…é¡»ç»§æ‰¿models.Modelï¼‰:
 			class Publisher(models.Model):
 				id = models.AutoField(primary_key=True)
 				name = models.CharField(max_length=32, null=False, unique=True)
@@ -68,141 +68,150 @@
 				name = models.CharField(max_length=32, null=False, unique=True)
 				books = models.ManyToManyField(to='Book')	
 				
-		5. Ö´ĞĞÊı¾İ¿âÇ¨ÒÆµÄÃüÁî
+		5. æ‰§è¡Œæ•°æ®åº“è¿ç§»çš„å‘½ä»¤
 			Python manage.py makemigrations
 			python manage.py migrate
-	5.ORM²Ù×÷
-		1. ²é
-			models.Publisher.objects.all()		# ²éÑ¯ËùÓĞµÄ³ö°æÉç¶ÔÏóµÄ¼¯ºÏ
-			models.Publisher.objects.get(id=1,nam='sss)   # ²éÑ¯Ö¸¶¨µÄÂú×ãÌõ¼şµÄ¶ÔÏó 	¡ª¡ª¡·Ò»¸ö¶ÔÏó 
-			models.Publisher.objects.filter(id=1,name='sss')  # ²éÑ¯Âú×ãÌõ¼şµÄËùÓĞ¶ÔÏó      ¡ª¡ª¡· ¶ÔÏóÁĞ±í
-			models.Publisher.objects.all().order_by('id')    # ÅÅĞò
+	5.ORMæ“ä½œ
+		1. æŸ¥
+			models.Publisher.objects.all()		# æŸ¥è¯¢æ‰€æœ‰çš„å‡ºç‰ˆç¤¾å¯¹è±¡çš„é›†åˆ
+			models.Publisher.objects.get(id=1,nam='sss)   # æŸ¥è¯¢æŒ‡å®šçš„æ»¡è¶³æ¡ä»¶çš„å¯¹è±¡ 	â€”â€”ã€‹ä¸€ä¸ªå¯¹è±¡ 
+			models.Publisher.objects.filter(id=1,name='sss')  # æŸ¥è¯¢æ»¡è¶³æ¡ä»¶çš„æ‰€æœ‰å¯¹è±¡      â€”â€”ã€‹ å¯¹è±¡åˆ—è¡¨
+			models.Publisher.objects.all().order_by('id')    # æ’åº
 			
-			ÊôĞÔ£º
-				ÎŞÍâ¼ü¡¢¶à¶Ô¶à£º
+			å±æ€§ï¼š
+				æ— å¤–é”®ã€å¤šå¯¹å¤šï¼š
 					pub_obj.id 
 					pub_obj.name
-				Íâ¼ü£º
+				å¤–é”®ï¼š
 					book_obj.id
 					book_obj.name
-					book_obj.publisher   ¡ª¡ª¡·bookËù¹ØÁªµÄ³ö°æÉç¶ÔÏó
+					book_obj.publisher   â€”â€”ã€‹bookæ‰€å…³è”çš„å‡ºç‰ˆç¤¾å¯¹è±¡
 					book_obj.publisher.id 
 					book_obj.publisher_id
-				¶à¶Ô¶à£º
+				å¤šå¯¹å¤šï¼š
 					author_obj.id
 					author_obj.name
-					author_obj.books		¡ª¡ª¡·django·â×°µÄ¹ÜÀí¶ÔÏó
-					author_obj.books.all()	¡ª¡ª¡· ÄÃµ½×÷Õß¹ÜÀíµÄËùÓĞÊé¼®µÄ¶ÔÏóÁĞ±í
-		2. Ôö
-			models.Publisher.objects.create(name='ĞÂµÄ³ö°æÉç')
-			Íâ¼ü£º
-				models.Bookj.objects.create(name='ĞÂµÄÊéÃû',publisher_id=1)
-				models.Bookj.objects.create(name='ĞÂµÄÊéÃû',publisher=pub_obj)
-			¶à¶Ô¶à£º
-				autho_obj = models.Author.objects.create(name='ĞÂµÄ×÷Õß')
+					author_obj.books		â€”â€”ã€‹djangoå°è£…çš„ç®¡ç†å¯¹è±¡
+					author_obj.books.all()	â€”â€”ã€‹ æ‹¿åˆ°ä½œè€…ç®¡ç†çš„æ‰€æœ‰ä¹¦ç±çš„å¯¹è±¡åˆ—è¡¨
+		2. å¢
+			models.Publisher.objects.create(name='æ–°çš„å‡ºç‰ˆç¤¾')
+			å¤–é”®ï¼š
+				models.Bookj.objects.create(name='æ–°çš„ä¹¦å',publisher_id=1)
+				models.Bookj.objects.create(name='æ–°çš„ä¹¦å',publisher=pub_obj)
+			å¤šå¯¹å¤šï¼š
+				autho_obj = models.Author.objects.create(name='æ–°çš„ä½œè€…')
 				autho_obj.books.set([1,2])
 				
-		3. É¾
+		3. åˆ 
 			models.Publisher.objects.get(id=1).delele()  	
 			models.Publisher.objects.filter(name='xxx').delele()
-		4. ¸Ä
-			pub_obj.name = 'ĞÂµÄÃû×Ö'
+		4. æ”¹
+			pub_obj.name = 'æ–°çš„åå­—'
 			pub_obj.save() 
 			
-			Íâ¼ü£º
-				book_obj.name = 'ĞÂµÄÊéÃû'
+			å¤–é”®ï¼š
+				book_obj.name = 'æ–°çš„ä¹¦å'
 				book_obj.publisher = pub_obj
 				# book_obj.publisher_id = pub_obj.id 
 				book_obj.save()
 				
-			¶à¶Ô¶à£º
-				author_obj.name='ĞÂµÄ×÷ÕßÃû'
+			å¤šå¯¹å¤šï¼š
+				author_obj.name='æ–°çš„ä½œè€…å'
 				author_obj.save()
 				author_obj.books.set([1,2,3])
 				
 		
 		
-	6. request	¡ª¡ª¡· ·â×°ÁËÇëÇóËùÓĞµÄÄÚÈİ
-		request.method   ¡ª¡ª¡·ÇëÇó·½Ê½ GET POST 
-		request.GET 	 ¡ª¡ª¡· URLÉÏÃæ´«²ÎÊı 127.0.0.1:8000/del_book/?id=1&name='xx'
-						×ÖµäĞÎÊ½ 	request.GET['id']	request.GET.get('id')
-		request.POST     ¡ª¡ª¡·POSTÇëÇóÌá½»µÄÊı¾İ ×Öµä
+	6. request	â€”â€”ã€‹ å°è£…äº†è¯·æ±‚æ‰€æœ‰çš„å†…å®¹
+		request.method   â€”â€”ã€‹è¯·æ±‚æ–¹å¼ GET POST 
+		request.GET 	 â€”â€”ã€‹ URLä¸Šé¢ä¼ å‚æ•° 127.0.0.1:8000/del_book/?id=1&name='xx'
+						å­—å…¸å½¢å¼ 	request.GET['id']	request.GET.get('id')
+		request.POST     â€”â€”ã€‹POSTè¯·æ±‚æäº¤çš„æ•°æ® å­—å…¸
 					request.POST['id']	request.POST.get('id')	
 					
-	7. º¯ÊıµÄ·µ»ØÖµ 		¡ª¡ª¡·±ØĞëÊÇHttpResponse¶ÔÏó
-		HttpResponse('×Ö·û´®')		¡ª¡ª¡·Ò³ÃæÏÔÊ¾×Ö·û´®µÄÄÚÈİ
-		render(request,'HTMLÎÄ¼şÃû',{k1:v1,})	¡ª¡ª¡·½«×ÖµäµÄÄÚÈİ½»¸øÄ£°åäÖÈ¾³ÉHTML ·µ»Ø¸øä¯ÀÀÆ÷
-		redirect('/index/')		Ìø×ª ÖØ¶¨Ïò ¡ª¡ª¡··µ»ØÒ»¸öÏìÓ¦Í· Location£º/index/
+	7. å‡½æ•°çš„è¿”å›å€¼ 		â€”â€”ã€‹å¿…é¡»æ˜¯HttpResponseå¯¹è±¡
+		HttpResponse('å­—ç¬¦ä¸²')		â€”â€”ã€‹é¡µé¢æ˜¾ç¤ºå­—ç¬¦ä¸²çš„å†…å®¹
+		render(request,'HTMLæ–‡ä»¶å',{k1:v1,})	â€”â€”ã€‹å°†å­—å…¸çš„å†…å®¹äº¤ç»™æ¨¡æ¿æ¸²æŸ“æˆHTML è¿”å›ç»™æµè§ˆå™¨
+		redirect('/index/')		è·³è½¬ é‡å®šå‘ â€”â€”ã€‹è¿”å›ä¸€ä¸ªå“åº”å¤´ Locationï¼š/index/
 	
 	
 		
 
-	8. djangoµÄÄ£°å£º
+	8. djangoçš„æ¨¡æ¿ï¼š
 		
-			{{ ±äÁ¿ }} 
-			for Ñ­»·
+			{{ å˜é‡ }} 
+			for å¾ªç¯
 			{% for name in name_list %}
 				{{ name }}
 				{{ forloop.counter }}
 				{{ forloop.last }}
 			{% endfor %}
 			
-			ifÅĞ¶Ï
+			ifåˆ¤æ–­
 			{% if 10>5 %}
-				²Ù×÷
+				æ“ä½œ
 			{% endif %}
 			
 			{% if 10>5 %}
-				²Ù×÷
+				æ“ä½œ
 			{% else %}
-				Ìõ¼ş²»³ÉÁ¢µÄ²Ù×÷
+				æ¡ä»¶ä¸æˆç«‹çš„æ“ä½œ
 			{% endif %}
 			
 			
 			{% if 10>5 %}
-				²Ù×÷
+				æ“ä½œ
 			{% elif 10>5 %}
-				elif³ÉÁ¢Ê±µÄ²Ù×÷
+				elifæˆç«‹æ—¶çš„æ“ä½œ
 			{% else %}
-				Ìõ¼ş²»³ÉÁ¢µÄ²Ù×÷
+				æ¡ä»¶ä¸æˆç«‹çš„æ“ä½œ
 			{% endif %}
+			
+			forloop   {  } 
+				forloop.counter      å½“å‰å¾ªç¯çš„ç´¢å¼•å€¼ ä»1å¼€å§‹
+				forloop.counter0     å½“å‰å¾ªç¯çš„ç´¢å¼•å€¼ ä»0å¼€å§‹
+				forloop.revcounter   å½“å‰å¾ªç¯çš„ç´¢å¼•å€¼(å€’åº) åˆ°1ç»“æŸ
+				forloop.revcounter0  å½“å‰å¾ªç¯çš„ç´¢å¼•å€¼(å€’åº) åˆ°0ç»“æŸ
+				forloop.first		 å•å‰å¾ªç¯æ˜¯å¦æ˜¯ç¬¬ä¸€æ¬¡å¾ªç¯  å¸ƒå°”å€¼
+				forloop.last		 å•å‰å¾ªç¯æ˜¯å¦æ˜¯æœ€åä¸€æ¬¡å¾ªç¯  å¸ƒå°”å€¼
+				forloop.parentloop   å½“å‰å¾ªç¯çš„å¤–å±‚å¾ªç¯
 
 ==============================================================
-		1. ±äÁ¿
-			{{ ±äÁ¿Ãû }} 
+		1. å˜é‡
+			{{ å˜é‡å }} 
 			
-		2. .ÓÃ·¨
+		2. .ç”¨æ³•
 			{{ name_list.0 }}   
 			{{ name_dict.key }}   
 			{{ p1.name }}   
 			{{ p1.dream }} 
 			{{ name_dict.items }} 
 			{{ name_dict.keys }} 
-		3. filters ¹ıÂËÆ÷
-			1. Óï·¨
-				{{ ±äÁ¿|filter:²ÎÊı }}
-			2. ÄÚÖÃµÄfilter 
+		3. filters è¿‡æ»¤å™¨
+			1. è¯­æ³•
+				{{ å˜é‡|filter:å‚æ•° }}
+			2. å†…ç½®çš„filter 
 				default:'noting'   
-				filesizeformat    ÏÔÊ¾ÎÄ¼ş´óĞ¡ 111111  ¡ª¡ª¡· kb mb pb 
-				add:'1' 		  Êı×Ö¼Ó·¨  ×Ö·û´®Æ´½Ó ÁĞ±íµÄÆ´½Ó
-				lower      Ğ¡Ğ´
-				upper	   ´óĞ´
-				title	   Ê××ÖÄ¸´óĞ´
-				rjust:20	ÓÒ¶ÔÆë
-				ljust:20    ×ó¶ÔÆë
-				center:20	¾ÓÖĞ
-				length      ·µ»Ø×Ö·û´®»òÕßÁĞ±íµÄ³¤¶È
-				slice:"::"	ÇĞÆ¬
-				first 		È¡µÚÒ»¸ö
-				last		È¡×îºóÒ»¸ö
-				join:'//'	½«ÁĞ±íÆ´½Ó³É×Ö·û´®
-				truncatechars:18   ½«³¬¹ıÖ¸¶¨³¤¶ÈµÄÄÚÈİÌæ»»³É...
+				filesizeformat    æ˜¾ç¤ºæ–‡ä»¶å¤§å° 111111  â€”â€”ã€‹ kb mb pb 
+				add:'1' 		  æ•°å­—åŠ æ³•  å­—ç¬¦ä¸²æ‹¼æ¥ åˆ—è¡¨çš„æ‹¼æ¥
+				lower      å°å†™
+				upper	   å¤§å†™
+				title	   é¦–å­—æ¯å¤§å†™
+				rjust:20	å³å¯¹é½
+				ljust:20    å·¦å¯¹é½
+				center:20	å±…ä¸­
+				length      è¿”å›å­—ç¬¦ä¸²æˆ–è€…åˆ—è¡¨çš„é•¿åº¦
+				slice:"::"	åˆ‡ç‰‡
+				first 		å–ç¬¬ä¸€ä¸ª
+				last		å–æœ€åä¸€ä¸ª
+				join:'//'	å°†åˆ—è¡¨æ‹¼æ¥æˆå­—ç¬¦ä¸²
+				truncatechars:18   å°†è¶…è¿‡æŒ‡å®šé•¿åº¦çš„å†…å®¹æ›¿æ¢æˆ...
 				date:'Y-m-d H:i:s'	2018-7-31 8:52:59
-				safe        ¶ÔÄãµÄHTMLÎÄ±¾²»½øĞĞ×ªÒå
-			3. ×Ô¶¨Òåfilter
-				1. ÔÚapp01ÏÂ´´½¨Ò»¸ö½ĞtemplatetagsµÄPython°ü
-				2. ÔÚtemplatetagsµÄÎÄ¼ş¼ĞÏÂ´´½¨pyÎÄ¼ş  myfilters
-				3. ÔÚpyÎÄ¼şÖĞĞ´´úÂë
+				safe        å¯¹ä½ çš„HTMLæ–‡æœ¬ä¸è¿›è¡Œè½¬ä¹‰
+			3. è‡ªå®šä¹‰filter
+				1. åœ¨app01ä¸‹åˆ›å»ºä¸€ä¸ªå«templatetagsçš„PythonåŒ…
+				2. åœ¨templatetagsçš„æ–‡ä»¶å¤¹ä¸‹åˆ›å»ºpyæ–‡ä»¶  myfilters
+				3. åœ¨pyæ–‡ä»¶ä¸­å†™ä»£ç 
 					from django import template
 					register = template.Library()
 					
@@ -214,7 +223,7 @@
 					def add_sb(value,arg='aaa'):
 						return "{}_sb_{}".formart(value,arg)
 				
-				4. Ê¹ÓÃ×Ô¶¨Òåfilter
+				4. ä½¿ç”¨è‡ªå®šä¹‰filter
 					{% load myfilters %}
 					{{ name|add_sb:'xxx'}}
 					{{ name|sb:'xxx'}}
